@@ -2,23 +2,6 @@
 
 import UIKit
 
-var homeRate:Double = 10000 // dollars per dollar
-var awayRate:Double = 6 // kroner per dollar
-
-func exchangeRate () -> Double {
-    var exchangeRate = homeRate / awayRate
-    return exchangeRate
-}
-
-func exchange(awayAmount:Double) -> Double
-{
-    var exchanged = awayAmount * exchangeRate()
-    return exchanged
-}
-
-exchangeRate()
-
-var exchangeString = String(format: "%0.20f", exchangeRate())
 
 extension String {
     subscript (i: Int) -> String {
@@ -38,13 +21,22 @@ extension Double {
     }
 }
 
-var leadingZerosAfterDecimal = 0
-var decimalPosition = 0
+
+
+var homeRate:Double = 1 // dollars per dollar
+var awayRate:Double = 6 // kroner per dollar
+
+func exchangeRate () -> Double {
+    var exchangeRate = homeRate / awayRate
+    return exchangeRate
+}
+
+var exchangeString = String(format: "%0.20f", exchangeRate())
+
 var firstSignificantDigitPositionAfterDecimal = 0
+var magnitude = 0.0
 
 var i:Int = 0
-var magnitude:Double = 0.0
-
 if (exchangeString[0] != "0")
 {
     while(exchangeString[i] != ".") {
@@ -67,27 +59,27 @@ else
     }
 }
 
-leadingZerosAfterDecimal
-decimalPosition
-firstSignificantDigitPositionAfterDecimal
 magnitude = pow(10.0,(magnitude-2.0))
 
+var exchangeRateInt:Int = Int(exchangeRate())
+var magnitudeInt:Int = Int(magnitude)
 
+var roundedExchange:Float = 0.0
 
 
 let exchangeRateValue = exchangeRate()
 
 if (exchangeRate() < 1){
     var myString = String(firstSignificantDigitPositionAfterDecimal)
-    let myDouble = exchangeRate()
-    println(myDouble.format(myString))
+    var myDouble = exchangeRate()
+    var roundedExchange = myDouble.format(myString)
+    
 }
 else{
     var myIntValue:Int = Int(exchangeRate())
     //need to figure out types then i can get the largest multiplier
-    //var rounded = magnitude((exchangeRate() + (magnitude / 2.0))/magnitude)
+    var roundedExchange = (magnitudeInt*((exchangeRateInt + (magnitudeInt/2))/magnitudeInt))
 }
-
 
 
 
