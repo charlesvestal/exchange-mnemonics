@@ -21,8 +21,8 @@ extension Double {
     }
 }
 
-var homeRate:Double = 6 // dollars per dollar
-var awayRate:Double = 1 // kroner per dollar
+var homeRate:Double = 1 // dollars per dollar
+var awayRate:Double = 6 // kroner per dollar
 
 func exchangeRate() -> Double {
     var exchangeRate = homeRate / awayRate
@@ -86,7 +86,8 @@ var variance =  (1 - (exchangeRate() / roundedExchangeRate(exchangeRate()))) * 1
 
 var varianceString = String(format:"%0.f", variance)
 
-println("The easiest exchange rate is going to be \(roundedExchangeRate(exchangeRate()))")
+
+println("The easiest exchange rate is going to \(roundedExchangeRate(exchangeRate()))")
 println("So multiply by \(multiplyBy)")
 println("then move the decimal over \(firstSignificantDigitPositionAfterDecimal) places")
 println("(It's actually about \(varianceString)% difference, so think about it as a little less or more back home in your head)")
