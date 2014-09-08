@@ -3,7 +3,7 @@
 import UIKit
 
 var homeRate:Double = 1 // home currency to USD
-var awayRate:Double = 6 // foreign currency to USD
+var awayRate:Double = 0.017 // foreign currency to USD
 var amountToExchange = 96.0
 
 extension Double {
@@ -57,18 +57,7 @@ var actualTotalString = String(format:"Your actual total is %.2f in local", actu
 var fakeEchangeMultiplied = amountToExchange * Double(multiplyBy)
 var fakeExchangeMovetheDecimal = fakeEchangeMultiplied * pow(10.0, Double(magnitude))
 
-
-
-
-
-
-
-
 /// output below
-
-
-
-
 
 println("You're exchanging \(amountToExchange) in foreign")
 println(actualTotalString)
@@ -76,13 +65,13 @@ println("at an actual exchange rate of \(exchangeRateValue)")
 
 println("The easiest exchange rate is going to be \(roundedExchange)")
 
-if(magnitude != 0)
+if(multiplyBy != 1)
 {
     println("So multiply times \(multiplyBy), i.e. \(amountToExchange) x \(multiplyBy) = \(fakeEchangeMultiplied)")
 }
 if (magnitude==0)
 {
-    // you're multiplying times 1
+    // you're multiplying times a single digit
 }
 else if(magnitude > 0){
     println("and add \(magnitude) zeroes, i.e. \(fakeExchangeMovetheDecimal)")
