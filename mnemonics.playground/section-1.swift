@@ -42,8 +42,6 @@ func roundedExchangeRate(exchangeValue:Double) -> String {
     return roundedString
 }
 
-
-
 var actualTotal = exchange(amountToExchange)
 var roundedExchange = roundedExchangeRate(exchangeRateValue)
 
