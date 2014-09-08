@@ -97,9 +97,15 @@ println("at an actual exchange rate of \(exchangeRateValue)")
 
 println("The easiest exchange rate is going to be \(roundedExchange)")
 
-println("So multiply times \(multiplyBy)")
-
-if(magnitude > 0){
+if(magnitude != 0)
+{
+    println("So multiply times \(multiplyBy)")
+}
+if (magnitude==0)
+{
+    // you're multiplying times 1
+}
+else if(magnitude > 0){
     println("and add \(magnitude) zeroes")
 }
 else {
