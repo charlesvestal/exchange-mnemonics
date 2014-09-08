@@ -64,7 +64,7 @@ var fakeExchangeMovetheDecimal = fakeEchangeMultiplied * pow(10.0, Double(magnit
 
 
 
-
+/// output below
 
 
 
@@ -93,10 +93,10 @@ else {
 
 if (variance > 0.0) {
     println("but the actual total is \(actualTotal), so the exchange is really about \(varianceString)% less than that,")
-    println("So think about everything as that much less than \(multiplyBy)x")
+    println("So think about everything as that much less than \(roundedExchange)x")
 }
 else
 {
     println("but the actual exchange is about \(varianceString)% more than that")
-    println("So think about everything as that much more than \(multiplyBy)x")
+    println("So think about everything as that much more than \(roundedExchange)x ")
 }
