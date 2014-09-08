@@ -2,6 +2,10 @@
 
 import UIKit
 
+var homeRate:Double = 7 // dollars per dollar
+var awayRate:Double = 6 // kroner per dollar
+var amountToExchange = 96.0
+
 
 extension String {
     subscript (i: Int) -> String {
@@ -15,82 +19,97 @@ extension String {
     }
 }
 
+extension Int {
+    func format(f: String) -> String {
+        return NSString(format: "%\(f)d", self)
+    }
+}
+
 extension Double {
     func format(f: String) -> String {
         return NSString(format: "%.\(f)f", self)
     }
 }
 
-var homeRate:Double = 1 // dollars per dollar
-var awayRate:Double = 6 // kroner per dollar
-
 func exchangeRate() -> Double {
     var exchangeRate = homeRate / awayRate
     return exchangeRate
 }
 
+func exchange(amount:Double) -> Double {
+    return amount * exchangeRateValue
+}
 
+var exchangeRateValue = exchangeRate()
 
-var exchangeString = String(format: "%0.20f", exchangeRate())
+var magnitude = Int(floor(log10(exchangeRateValue)))
 
-var firstSignificantDigitPositionAfterDecimal = 0
-var magnitude = 0.0
-
-var i:Int = 0
-if (exchangeString[0] != "0")
-{
-    while(exchangeString[i] != ".") {
-        magnitude++
-        i++
+func roundedExchangeRate(exchangeValue:Double) -> String {
+    
+    let magnitudeString: String = String(format:"%i", magnitude)
+    var roundedString:String = ""
+    
+    if(exchangeValue < 1)
+    {
+        let someDouble = exchangeValue, someDoubleFormat = String(format:"0.%i", (magnitude * -1))
+        roundedString = String("\(someDouble.format(someDoubleFormat))")
     }
-    firstSignificantDigitPositionAfterDecimal = 0
-    magnitude++
+    else
+    {
+        let mupltiplier = pow(10.0, Double(magnitude))
+        let roundedExchange = Int(mupltiplier) * lround(exchangeValue / mupltiplier)
+        roundedString = String(format:"%i", roundedExchange)
+    }
+    return roundedString
+}
+
+
+
+var actualTotal = exchange(amountToExchange)
+var roundedExchange = roundedExchangeRate(exchangeRateValue)
+
+var roundedExchangeDoubleValue = Float((roundedExchange as NSString).doubleValue)
+var variance =  (1.0 - exchangeRateValue / Double(roundedExchangeDoubleValue)) * 100
+var varianceString = NSString(format:"%0.f", abs(variance))
+var multiplyBy:Int = Int((roundedExchangeDoubleValue / pow(10.0, Float(magnitude)))) // need to get multiply by working
+var actualTotalString = String(format:"Your actual total is %.2f in local", actualTotal)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+println("You're exchanging \(amountToExchange) in foreign")
+println(actualTotalString)
+println("at an actual exchange rate of \(exchangeRateValue)")
+
+println("The easiest exchange rate is going to be \(roundedExchange)")
+
+println("So multiply times \(multiplyBy)")
+
+if(magnitude > 0){
+    println("and add \(magnitude) zeroes")
+}
+else {
+   println("and move the decimal \(abs(magnitude)) places to the left")
+}
+
+if (variance > 0.0) {
+println("but it's really about \(varianceString)% less than in that")
 }
 else
-{ // we're below 0
-    while(exchangeString[i] == "0" || exchangeString[i] == ".")
-    {
-        if(exchangeString[i]=="."){
-        }
-        else{
-            firstSignificantDigitPositionAfterDecimal++
-        }
-        i++
-    }
-}
-
-
-var myString = String(firstSignificantDigitPositionAfterDecimal)
-var myDouble = exchangeRate()
-var roundedExchangeString = NSString(string: myDouble.format(myString))
-
-var exchangeRateInt:Int = Int(exchangeRate())
-var magnitudeInt:Int = Int(magnitude)
-
-
-func roundedExchangeRate(Double) -> Double
 {
-if (exchangeRate() < 1){
-        var roundedExchangeString = NSString(string: myDouble.format(myString))
-        return roundedExchangeString.doubleValue //return
-    }
-else{
-        var myIntValue = exchangeRate()
-        var roundedExchange = (magnitudeInt*((exchangeRateInt + (magnitudeInt/2))/magnitudeInt))
-        return Double(roundedExchange)
-    }
+    println("but it's really about \(varianceString)% more than in that")
 }
-
-var multiplyBy: Int = Int(roundedExchangeRate(exchangeRate()) * pow(10.0, Double(firstSignificantDigitPositionAfterDecimal)))
-var variance =  (1 - (exchangeRate() / roundedExchangeRate(exchangeRate()))) * 100
-
-var varianceString = String(format:"%0.f", variance)
-
-
-println("The easiest exchange rate is going to \(roundedExchangeRate(exchangeRate()))")
-println("So multiply by \(multiplyBy)")
-println("then move the decimal over \(firstSignificantDigitPositionAfterDecimal) places")
-println("(It's actually about \(varianceString)% difference, so think about it as a little less or more back home in your head)")
-
-
-
