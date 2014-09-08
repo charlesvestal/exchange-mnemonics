@@ -2,28 +2,9 @@
 
 import UIKit
 
-var homeRate:Double = 7 // dollars per dollar
-var awayRate:Double = 6 // kroner per dollar
+var homeRate:Double = 1 // home currency to USD
+var awayRate:Double = 6 // foreign currency to USD
 var amountToExchange = 96.0
-
-
-extension String {
-    subscript (i: Int) -> String {
-        return String(Array(self)[i])
-    }
-    
-    subscript (r: Range<Int>) -> String {
-        var start = advance(startIndex, r.startIndex)
-            var end = advance(startIndex, r.endIndex)
-            return substringWithRange(Range(start: start, end: end))
-    }
-}
-
-extension Int {
-    func format(f: String) -> String {
-        return NSString(format: "%\(f)d", self)
-    }
-}
 
 extension Double {
     func format(f: String) -> String {
@@ -45,14 +26,12 @@ var exchangeRateValue = exchangeRate()
 var magnitude = Int(floor(log10(exchangeRateValue)))
 
 func roundedExchangeRate(exchangeValue:Double) -> String {
-    
-    let magnitudeString: String = String(format:"%i", magnitude)
-    var roundedString:String = ""
+    var roundedString = ""
     
     if(exchangeValue < 1)
     {
-        let someDouble = exchangeValue, someDoubleFormat = String(format:"0.%i", (magnitude * -1))
-        roundedString = String("\(someDouble.format(someDoubleFormat))")
+        let roundedExchangeValue = exchangeValue, Format = String(format:"0.%i", (magnitude * -1))
+        roundedString = String("\(roundedExchangeValue.format(Format))")
     }
     else
     {
@@ -75,8 +54,8 @@ var multiplyBy:Int = Int((roundedExchangeDoubleValue / pow(10.0, Float(magnitude
 var actualTotalString = String(format:"Your actual total is %.2f in local", actualTotal)
 
 
-
-
+var fakeEchangeMultiplied = amountToExchange * Double(multiplyBy)
+var fakeExchangeMovetheDecimal = fakeEchangeMultiplied * pow(10.0, Double(magnitude))
 
 
 
@@ -99,23 +78,25 @@ println("The easiest exchange rate is going to be \(roundedExchange)")
 
 if(magnitude != 0)
 {
-    println("So multiply times \(multiplyBy)")
+    println("So multiply times \(multiplyBy), i.e. \(amountToExchange) x \(multiplyBy) = \(fakeEchangeMultiplied)")
 }
 if (magnitude==0)
 {
     // you're multiplying times 1
 }
 else if(magnitude > 0){
-    println("and add \(magnitude) zeroes")
+    println("and add \(magnitude) zeroes, i.e. \(fakeExchangeMovetheDecimal)")
 }
 else {
-   println("and move the decimal \(abs(magnitude)) places to the left")
+   println("and move the decimal \(abs(magnitude)) places to the left, i.e. \(fakeExchangeMovetheDecimal)")
 }
 
 if (variance > 0.0) {
-println("but it's really about \(varianceString)% less than in that")
+    println("but the actual total is \(actualTotal), so the exchange is really about \(varianceString)% less than that,")
+    println("So think about everything as that much less than \(multiplyBy)x")
 }
 else
 {
-    println("but it's really about \(varianceString)% more than in that")
+    println("but the actual exchange is about \(varianceString)% more than that")
+    println("So think about everything as that much more than \(multiplyBy)x")
 }
