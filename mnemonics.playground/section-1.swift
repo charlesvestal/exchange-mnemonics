@@ -3,7 +3,7 @@
 import UIKit
 
 var homeRate:Double = 1 // home currency to USD
-var awayRate:Double = 21.41 // USD to foreign
+var awayRate:Double = 21.41 // USD to CZK
 var amountToExchange = 113.0
 
 extension Double {
@@ -47,9 +47,9 @@ var roundedExchange = roundedExchangeRate(exchangeRateValue)
 
 var roundedExchangeDoubleValue = Float((roundedExchange as NSString).doubleValue)
 var variance =  (1.0 - exchangeRateValue / Double(roundedExchangeDoubleValue)) * 100
-var varianceString = NSString(format:"%0.f", abs(variance))
-var multiplyBy:Int = Int((roundedExchangeDoubleValue / pow(10.0, Float(magnitude)))) // need to get multiply by working
-var actualTotalString = String(format:"Your actual total is %.2f in local", actualTotal)
+var varianceString = NSString(format:"%0.f%%", abs(variance))
+var multiplyBy:Int = Int((roundedExchangeDoubleValue / pow(10.0, Float(magnitude))))
+var actualTotalString = String(format:"Your actual total is %.2f in USD", actualTotal)
 
 
 var fakeEchangeMultiplied = amountToExchange * Double(multiplyBy)
@@ -57,7 +57,7 @@ var fakeExchangeMovetheDecimal = fakeEchangeMultiplied * pow(10.0, Double(magnit
 
 /// output below
 
-println("You're exchanging \(amountToExchange) in foreign")
+println("You're exchanging \(amountToExchange) in CZK")
 println(actualTotalString)
 println("at an actual exchange rate of \(exchangeRateValue)")
 
@@ -78,7 +78,7 @@ else {
 
 
 if (variance > 0.0) {
-    println("but the actual total is \(actualTotal), so the real total is about \(varianceString)% less than that,")
+    println("but the actual total is \(actualTotal), so the real total is about \(varianceString) less than that,")
     println("So think about everything as that much less than \(roundedExchange)x")
 }
 else
